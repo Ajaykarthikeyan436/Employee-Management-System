@@ -4,7 +4,6 @@ import Home from './Pages/Home'
 import Login from './Pages/Login'
 import Signup from './Pages/Signup'
 import AddEmployee from './Pages/AddEmployee'
-import Profile from './Pages/Profile'
 import Employees from './Pages/Employees'
 import { ToastContainer } from 'react-toast'
 
@@ -24,7 +23,6 @@ const App = () => {
           {/* Nested Pages */}
           <Route path="employees" element={<Employees />} />
           <Route path="add-employee" element={<AddEmployee />} />
-          <Route path="profile" element={<Profile />} />
         </Route>
       </Routes>
     </div>

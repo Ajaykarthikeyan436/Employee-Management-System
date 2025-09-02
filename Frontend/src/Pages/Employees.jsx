@@ -1,41 +1,60 @@
-import { ArrowLeftIcon } from 'lucide-react';
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import { backendUrl } from '../App';
+import { toast } from 'react-toast';
 
 const Employees = () => {
-    const [employees] = useState([
-        { id: 1, name: "John Doe", position: "Developer", department: "IT" },
-        { id: 2, name: "Jane Smith", position: "Manager", department: "HR" },
-        { id: 3, name: "Agnel", position: "Field Worker", department: "Marketing" },
-    ]);
+    const [employees, setEmployees] = useState([])
+    const [loading, setLoading] = useState(false);
 
-    const navigate = useNavigate()
+    const listEmployees = async () => {
+        try {
+            setLoading(true);
+            const response = await axios.get(backendUrl + "/api/employees/list");
+            setEmployees(response.data);
+        } catch (error) {
+            console.log(error.message);
+            toast.error("Failed to load employees");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        listEmployees()
+    },[])
 
     return (
         <div className="p-6">
-            <div className='flex gap-2 items-center'>
-                <ArrowLeftIcon onClick={() => navigate('/dashboard')} className='w-6 h-6 cursor-pointer' />
-                <h2 className="text-2xl font-bold">Employees</h2>
-            </div>
-            <table className="w-full border-collapse border mt-5">
-                <thead>
-                    <tr className="bg-gray-200">
-                        <th className="border p-2">Name</th>
-                        <th className="border p-2">Position</th>
-                        <th className="border p-2">Department</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {employees.map(item => (
-                        <tr key={item.id}>
-                            <td className="border p-2">{item.name}</td>
-                            <td className="border p-2">{item.position}</td>
-                            <td className="border p-2">{item.department}</td>
+
+            <h2 className="text-2xl font-bold">Employees</h2>
+
+            {loading ? (
+                <p className="mt-5 text-gray-600">Loading employees...</p>
+            ) : employees.length === 0 ? (
+                <p className="mt-5 text-gray-600">No employees found.</p>
+            ) : (
+                <table className="w-full border-collapse border mt-5">
+                    <thead>
+                        <tr className="bg-gray-200">
+                            <th className="border p-2">Name</th>
+                            <th className="border p-2">Position</th>
+                            <th className="border p-2">Department</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {employees.map(item => (
+                            <tr key={item._id}>
+                                <td className="border p-2">{item.name}</td>
+                                <td className="border p-2">{item.position}</td>
+                                <td className="border p-2">{item.department}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            )}
         </div>
+
     );
 }
 

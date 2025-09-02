@@ -13,7 +13,7 @@ const getEmployees = async (req, res) => {
 //Add Employee
 const addEmployee = async (req, res) => {
   try {
-    const { name, email, position, department, salary, dateOfJoining } = req.body;
+    const { employeeId, name, email, position, department, salary, dateOfJoining } = req.body;
 
     // Check duplicate by email
     const employeeExists = await EmployeeModel.findOne({ email });
@@ -22,6 +22,7 @@ const addEmployee = async (req, res) => {
     }
 
     const employee = new EmployeeModel({
+      employeeId,
       name,
       email,
       position,

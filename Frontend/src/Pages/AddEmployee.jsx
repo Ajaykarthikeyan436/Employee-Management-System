@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import axios from 'axios'
 import { backendUrl } from "../App";
 import { toast } from "react-toast";
+import { getAuth } from "firebase/auth";
 
 const AddEmployee = () => {
-  
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -28,12 +29,26 @@ const AddEmployee = () => {
     e.preventDefault();
     setLoading(true);
 
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (!user) {
+      toast.error("Login and Continue")
+      return;
+    }
+
     try {
-      const response = await axios.post( backendUrl + "/api/employees/add" ,formData)
-      toast.success(" Employee Added Successfully!");
+      const response = await axios.post(
+        backendUrl + "/api/employees/add",
+        {
+          ...formData,
+          employeeId: user.uid
+        }
+      );
+
+      toast.success("Employee Added Successfully!");
       console.log("Employee Saved:", response.data);
 
-      // reset form
       setFormData({
         name: "",
         email: "",

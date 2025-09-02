@@ -11,7 +11,6 @@ const Home = () => {
     { name: "Dashboard", path: "/dashboard" },
     { name: "Employees", path: "/dashboard/employees" },
     { name: "Add Employee", path: "/dashboard/add-employee" },
-    { name: "Profile", path: "/dashboard/profile" },
   ];
 
   const logout = () => {
