@@ -1,15 +1,14 @@
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import { getAuth } from 'firebase/auth'
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCo_e92DuibnIwKW_jOzA59SEaXc3hXbjo",
-  authDomain: "employee-management-3f432.firebaseapp.com",
-  projectId: "employee-management-3f432",
-  storageBucket: "employee-management-3f432.firebasestorage.app",
-  messagingSenderId: "966393846567",
-  appId: "1:966393846567:web:bd2be2030d30a6d649e702",
-  measurementId: "G-HT7Y6LMX4C"
+  apiKey: process.env.VITE_FIREBASE_API_KEY,
+  authDomain: process.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.VITE_FIREBASE_MESSEGING_SENDER_ID,
+  appId: process.env.VITE_FIREBASE_APP_ID,
+  measurementId: process.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
 // Initialize Firebase
