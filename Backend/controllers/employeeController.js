@@ -10,10 +10,16 @@ const getEmployees = async (req, res) => {
   }
 };
 
-//Add Employee
+// Add Employee
 const addEmployee = async (req, res) => {
   try {
-    const { employeeId, name, email, position, department, salary, dateOfJoining } = req.body;
+    console.log("Incoming body:", req.body); // 👀 Debug
+
+    const { name, email, position, department, salary, dateOfJoining } = req.body;
+
+    if (!name || !email || !position || !department || !salary) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
 
     // Check duplicate by email
     const employeeExists = await EmployeeModel.findOne({ email });
@@ -22,7 +28,6 @@ const addEmployee = async (req, res) => {
     }
 
     const employee = new EmployeeModel({
-      employeeId,
       name,
       email,
       position,
@@ -32,9 +37,12 @@ const addEmployee = async (req, res) => {
     });
 
     const savedEmployee = await employee.save();
-    res.status(201).json(savedEmployee);
+    console.log("Saved employee:", savedEmployee); // 👀 Debug
+    return res.status(201).json(savedEmployee);
+
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error("Add employee error:", error); // 👀 Print actual error
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -62,11 +70,13 @@ const updateEmployee = async (req, res) => {
 // Delete employee
 const deleteEmployee = async (req, res) => {
   try {
-    const deletedEmployee = await EmployeeModel.findByIdAndDelete(req.params.id);
-    if (!deletedEmployee) {
-      return res.status(404).json({ message: "Employee not found" });
-    }
-    res.status(200).json({ message: "Employee deleted successfully" });
+
+    const { id } = req.body;
+    console.log(id)
+
+    await EmployeeModel.findByIdAndDelete(id)
+    res.json({ success: true, message: "Employee Removed Successfully" })
+
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

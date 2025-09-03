@@ -24,6 +24,25 @@ const Employees = () => {
         listEmployees()
     },[])
 
+    const removeEmployee = async (id) => {
+        try {
+
+            const response = await axios.post( backendUrl + "/api/employees/delete", {id} )
+
+            if(response.data.success) {
+                toast.success(response.data.message)
+                await listEmployees()
+            }
+            else{
+                toast.error(response.data.message)
+            }
+
+        } catch (error) {
+            console.log(error.message)
+            toast.error(error.message)
+        }
+    }
+
     return (
         <div className="p-6">
 
@@ -40,6 +59,7 @@ const Employees = () => {
                             <th className="border p-2">Name</th>
                             <th className="border p-2">Position</th>
                             <th className="border p-2">Department</th>
+                            <th className='border p-2'>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -48,6 +68,7 @@ const Employees = () => {
                                 <td className="border p-2">{item.name}</td>
                                 <td className="border p-2">{item.position}</td>
                                 <td className="border p-2">{item.department}</td>
+                                <td className='border p-2 cursor-pointer'><p onClick={() => removeEmployee(item._id)}>X</p></td>
                             </tr>
                         ))}
                     </tbody>

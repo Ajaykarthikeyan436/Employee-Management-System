@@ -38,13 +38,7 @@ const AddEmployee = () => {
     }
 
     try {
-      const response = await axios.post(
-        backendUrl + "/api/employees/add",
-        {
-          ...formData,
-          employeeId: user.uid
-        }
-      );
+      const response = await axios.post( backendUrl + "/api/employees/add", formData );
 
       toast.success("Employee Added Successfully!");
       console.log("Employee Saved:", response.data);
