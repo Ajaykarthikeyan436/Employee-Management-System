@@ -1,21 +1,9 @@
-import React, { useState } from "react";
-import axios from 'axios'
-import { backendUrl } from "../App";
-import { toast } from "react-toast";
-import { getAuth } from "firebase/auth";
+import React, { useContext, useState } from "react";
+import { AppContext } from "../context/AppContext";
 
 const AddEmployee = () => {
 
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    position: "",
-    department: "",
-    salary: "",
-    dateOfJoining: "",
-  });
-
-  const [loading, setLoading] = useState(false);
+  const { formData, setFormData, EmployeeAdd, loading } = useContext(AppContext)
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,45 +13,11 @@ const AddEmployee = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    const auth = getAuth();
-    const user = auth.currentUser;
-
-    if (!user) {
-      toast.error("Login and Continue")
-      return;
-    }
-
-    try {
-      const response = await axios.post( backendUrl + "/api/employees/add", formData );
-
-      toast.success("Employee Added Successfully!");
-      console.log("Employee Saved:", response.data);
-
-      setFormData({
-        name: "",
-        email: "",
-        position: "",
-        department: "",
-        salary: "",
-        dateOfJoining: "",
-      });
-    } catch (err) {
-      console.error(err);
-      toast.error("Failed to add employee");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <div>
       <h2 className="text-2xl font-bold mb-6">Add New Employee</h2>
       <form
-        onSubmit={handleSubmit}
+        onSubmit={EmployeeAdd}
         className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white p-6 rounded-lg shadow-md"
       >
         {/* Name */}

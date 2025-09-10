@@ -48,6 +48,7 @@ const addEmployee = async (req, res) => {
 
 // Update employee
 const updateEmployee = async (req, res) => {
+  
   try {
     const { name, email, position, department, salary, dateOfJoining } = req.body;
 
@@ -63,9 +64,11 @@ const updateEmployee = async (req, res) => {
 
     res.status(200).json(updatedEmployee);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: error.message });
   }
 };
+
 
 // Delete employee
 const deleteEmployee = async (req, res) => {
