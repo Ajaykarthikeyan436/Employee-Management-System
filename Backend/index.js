@@ -10,7 +10,7 @@ app.use(cors({
   origin: [
     'http://localhost:5173', 
     'https://employee-management-system-fshr.vercel.app',
-    'https://tech-bazaar-frontend-d1vorsh3y-ajays-projects-8ce49744.vercel.app',//fallback Url for frontend
+    'https://employee-management-system-fshr-4wqjll1sn.vercel.app',
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true,
