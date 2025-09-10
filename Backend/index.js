@@ -13,7 +13,6 @@ app.use(cors({
     'https://employee-management-system-fshr-4wqjll1sn.vercel.app',
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  credentials: true,
 }));
 app.use(express.json())
 
