@@ -11,6 +11,7 @@ app.use(cors({
     'http://localhost:5173', 
     'https://employee-management-system-fshr.vercel.app',
     'https://employee-management-system-fshr-4wqjll1sn.vercel.app',
+    'https://employee-management-system-fshr-l5ii5pt69.vercel.app',
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
 }));
