@@ -13,7 +13,7 @@ const getEmployees = async (req, res) => {
 // Add Employee
 const addEmployee = async (req, res) => {
   try {
-    console.log("Incoming body:", req.body); // 👀 Debug
+    console.log("Incoming body:", req.body);
 
     const { name, email, position, department, salary, dateOfJoining } = req.body;
 
@@ -21,7 +21,6 @@ const addEmployee = async (req, res) => {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    // Check duplicate by email
     const employeeExists = await EmployeeModel.findOne({ email });
     if (employeeExists) {
       return res.status(400).json({ message: "Employee with this email already exists" });
@@ -37,11 +36,11 @@ const addEmployee = async (req, res) => {
     });
 
     const savedEmployee = await employee.save();
-    console.log("Saved employee:", savedEmployee); // 👀 Debug
+    console.log("Saved employee:", savedEmployee);
     return res.status(201).json(savedEmployee);
 
   } catch (error) {
-    console.error("Add employee error:", error); // 👀 Print actual error
+    console.error("Add employee error:", error);
     return res.status(500).json({ message: error.message });
   }
 };
@@ -68,7 +67,6 @@ const updateEmployee = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
 
 // Delete employee
 const deleteEmployee = async (req, res) => {
